@@ -20,9 +20,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 })
     }
 
+    // Basic email sanity check (not perfect, but prevents obvious junk)
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 })
+    }
+
     const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY
     if (!recaptchaSecret) {
       return NextResponse.json({ error: 'Missing reCAPTCHA secret.' }, { status: 500 })
+    }
+
+    type RecaptchaVerifyResponse = {
+      success?: boolean
+      challenge_ts?: string
+      hostname?: string
+      ['error-codes']?: string[]
     }
 
     const verifyResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
@@ -34,9 +46,34 @@ export async function POST(request: Request) {
       }).toString(),
     })
 
-    const verification = (await verifyResponse.json()) as { success?: boolean }
+    if (!verifyResponse.ok) {
+      // Google sometimes returns non-200 on network/policy issues
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification request failed.' },
+        { status: 502 }
+      )
+    }
+
+    const verification = (await verifyResponse.json()) as RecaptchaVerifyResponse
+
     if (!verification.success) {
-      return NextResponse.json({ error: 'reCAPTCHA verification failed.' }, { status: 400 })
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification failed.', details: verification['error-codes'] ?? [] },
+        { status: 400 }
+      )
+    }
+
+    // Optional: ensure the token was issued for this site (recommended for production).
+    // Set RECAPTCHA_ALLOWED_HOSTNAMES="macelebrant.vercel.app,localhost,macelebrant.com" in env.
+    const allowedHostnames = (process.env.RECAPTCHA_ALLOWED_HOSTNAMES || '')
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean)
+
+    if (allowedHostnames.length && verification.hostname) {
+      if (!allowedHostnames.includes(verification.hostname)) {
+        return NextResponse.json({ error: 'reCAPTCHA hostname mismatch.' }, { status: 400 })
+      }
     }
 
     const smtpHost = process.env.SMTP_HOST || 'smtp.crazydomains.com'

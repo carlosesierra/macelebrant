@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 
 type FormState = {
@@ -26,19 +26,19 @@ export default function ContactForm() {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }))
   }
 
-  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setStatus('sending')
     setError(null)
 
-    const token = recaptchaRef.current?.getValue()
+    const token = captchaToken
     if (!token) {
       setStatus('error')
       setError('Please complete the reCAPTCHA.')
@@ -65,6 +65,7 @@ export default function ContactForm() {
       setStatus('error')
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
       recaptchaRef.current?.reset()
+      setCaptchaToken(null)
     }
   }
 
