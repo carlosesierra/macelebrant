@@ -108,7 +108,7 @@ html {
     opacity: 0 !important;
   }
 
-  .home-sequence-item:first-child {
+  .home-sequence-item:first-of-type {
     opacity: 1 !important;
   }
 }
