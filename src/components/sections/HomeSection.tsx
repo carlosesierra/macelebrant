@@ -53,7 +53,7 @@ export default function HomeSection({ home }: { home: HomeData | null }) {
         </Reveal>
 
         <Reveal className={homeStyle.col2} delay={150}>
-          <h2>{heading}</h2>
+          <h3>{heading}</h3>
           <p>{subHeading}</p>
           <h1>{content}</h1>
         </Reveal>

@@ -8,8 +8,8 @@ import VideoPlayer from '@/components/VideoPlayer'
 import Reveal from '@/components/Reveal'
 
 const aboutStyle = {
-  heading: 'w-full md:max-w-6xl',
-  cols: 'w-full md:max-w-6xl grid md:grid-cols-2 gap-6 py-4',
+  heading: 'w-full lg:max-w-6xl',
+  cols: 'w-full lg:max-w-6xl grid lg:grid-cols-2 gap-6 py-4',
   imgWrapper: 'relative w-full overflow-hidden aspect-4/3 shadow-md border-16 border-white my-4',
   img: 'object-cover aspect-4/3',
 }
@@ -86,7 +86,7 @@ export default function AboutSection({ about }: { about: AboutData | null }) {
     <section id='aboutme' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-white'>
       
       <Reveal className={aboutStyle.heading} delay={0}>
-        <h3>{heading}</h3>
+        <h2>{heading}</h2>
       </Reveal>
 
       <div className={aboutStyle.cols}>

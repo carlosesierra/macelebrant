@@ -86,7 +86,7 @@ export default function ResourcesSection({ resources }: { resources: ResourcesDa
     <section id='resources' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-neutral-200'>
       
       <Reveal className={resourcesStyle.heading} delay={0}>
-        <h3>{heading}</h3>
+        <h2>{heading}</h2>
       </Reveal>
 
       <div className={resourcesStyle.cols}>

@@ -86,7 +86,7 @@ export default function EspanolSection({ espanol }: { espanol: EspanolData | nul
     <section id='espanol' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-white'>
       
       <Reveal className={espanolStyle.heading} delay={0}>
-        <h3>{heading}</h3>
+        <h2>{heading}</h2>
       </Reveal>
 
       <div className={espanolStyle.cols}>

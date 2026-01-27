@@ -20,7 +20,7 @@ export default function TestimonialsSection({ testimonials, }: { testimonials: T
   return (
     <section id='testimonials' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-white'>
       <Reveal className={testimonialStyle.heading} delay={0}>
-        <h3>{heading}</h3>
+        <h2>{heading}</h2>
       </Reveal>
 
       <Reveal className='w-full max-w-6xl mx-auto' delay={150}>

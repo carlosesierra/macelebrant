@@ -67,7 +67,7 @@ export default function FeesSection({ fees, }: { fees: FeesData | null }) {
   return (
     <section id='fees' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-neutral-200'>
       <Reveal className={feesStyle.heading} delay={0}>
-        <h3>{heading}</h3>
+        <h2>{heading}</h2>
       </Reveal>
 
       <div className={feesStyle.cols}>

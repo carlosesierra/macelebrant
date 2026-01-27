@@ -24,7 +24,7 @@ export default function PromoVideoSection({ promoVideo }: { promoVideo: PromoVid
   return (
     <section id='promovideo' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-neutral-200'>
       <Reveal className={promoVideoStyle.heading} delay={0}>
-        <h3>{heading}</h3>
+        <h2>{heading}</h2>
       </Reveal>
 
       <div className={promoVideoStyle.cols}>
