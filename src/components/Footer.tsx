@@ -40,7 +40,7 @@ export default function Footer() {
           </p>
         </div>
         <div>
-          <h4 className='uppercase text-xs mb-4'>Navigation</h4>
+          <h4 className='uppercase text-xs mb-4'>Connect</h4>
           <ul className='space-y-2'> 
               {footerSocial.map((item) => (
                   <li key={item.name} className='text-sm'>
@@ -54,7 +54,7 @@ export default function Footer() {
             </ul>
         </div>
         <div>
-          <h4 className='uppercase text-xs mb-4'>Connect</h4>
+          <h4 className='uppercase text-xs mb-4'>Navigation</h4>
           <ul className='space-y-2'> 
               {footerMenu.map((item) => (
                   <li key={item.name} className='text-sm'>
