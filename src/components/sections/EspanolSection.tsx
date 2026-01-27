@@ -5,6 +5,7 @@ import { urlFor } from '@/lib/sanity.image'
 import { PortableText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import VideoPlayer from '@/components/VideoPlayer'
+import Reveal from '@/components/Reveal'
 
 const espanolStyle = {
   heading: 'w-full md:max-w-6xl',
@@ -49,7 +50,12 @@ const ptComponents = {
     link: ({ value, children }: any) => {
       const href = value?.href || '#'
       return (
-        <a href={href} target='_blank' rel='noreferrer noopener'>
+        <a
+          href={href}
+          target='_blank'
+          rel='noreferrer noopener'
+          className='underline-offset-4 hover:underline'
+        >
           {children}
         </a>
       )
@@ -79,17 +85,17 @@ export default function EspanolSection({ espanol }: { espanol: EspanolData | nul
   return (
     <section id='espanol' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-white'>
       
-      <div className={espanolStyle.heading}>
-          <h3>{heading}</h3>
-      </div>
+      <Reveal className={espanolStyle.heading} delay={0}>
+        <h3>{heading}</h3>
+      </Reveal>
 
       <div className={espanolStyle.cols}>
-        <div className={espanolStyle.col1}>
+        <Reveal className={espanolStyle.col1} delay={50}>
           {renderImage(image)}
-        </div>
-        <div className={espanolStyle.col2}>
+        </Reveal>
+        <Reveal className={espanolStyle.col2} delay={100}>
           <PortableText value={content} components={ptComponents} />
-        </div>
+        </Reveal>
       </div>
       
     </section>

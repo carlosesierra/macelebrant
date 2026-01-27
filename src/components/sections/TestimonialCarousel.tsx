@@ -8,8 +8,7 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/sanity.image'
 
 const testimonialCarouselStyle = {
-  heading: 'text-lg font-semibold text-gray-900',
-  content: 'mt-3 text-sm leading-relaxed text-gray-600',
+  content: 'mt-3',
   cols: 'grid w-full gap-6 md:grid-cols-2 md:items-center',
   col1: 'relative aspect-square w-full overflow-hidden shadow-md my-4 border-16 border-white',
   col2: 'px-3 pb-5',
@@ -87,7 +86,7 @@ export default function TestimonialCarousel({
                   </div>
                   
                   <div className={testimonialCarouselStyle.col2}>
-                    <h3 className={testimonialCarouselStyle.heading}>
+                    <h3>
                       {testimonial.heading}
                     </h3>
                     <p className={testimonialCarouselStyle.content}>

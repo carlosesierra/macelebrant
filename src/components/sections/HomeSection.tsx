@@ -1,5 +1,6 @@
 // src/sanity/schemaTypes/HomeSection.tsx
 import Image from 'next/image'
+import Reveal from '@/components/Reveal'
 import HomeImageSequence from '@/components/sections/HomeImageSequence'
 import HomeArrow from '@/components/sections/HomeArrow'
 import { urlFor } from '@/lib/sanity.image'
@@ -31,7 +32,7 @@ export default function HomeSection({ home }: { home: HomeData | null }) {
     <section id='home' className='lg:h-screen flex flex-col items-center justify-center p-8 scroll-mt-16 bg-neutral-200 pt-24 lg:pt-8'>
 
       <div className={homeStyle.cols}>
-        <div className={homeStyle.col1}>
+        <Reveal className={homeStyle.col1} delay={0}>
           {imageSequence.length > 1 ? 
           (
             <HomeImageSequence images={imageSequence} alt={heading} secondsPerImage={5} />
@@ -49,15 +50,17 @@ export default function HomeSection({ home }: { home: HomeData | null }) {
           ) : (
             <div></div>
           )}
-        </div>
+        </Reveal>
 
-        <div className={homeStyle.col2}>
+        <Reveal className={homeStyle.col2} delay={150}>
           <h2>{heading}</h2>
           <p>{subHeading}</p>
           <h1>{content}</h1>
-        </div>
+        </Reveal>
       </div>
-      <HomeArrow />
+      <Reveal delay={300}>
+        <HomeArrow />
+      </Reveal>
     </section>
   )
 }

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang='en' className={quicksand.variable}>
-      <body className='antialiased flex flex-col min-h-screen font-sans'>
+      <body className='antialiased flex flex-col min-h-screen'>
         {children}
       </body>
     </html>

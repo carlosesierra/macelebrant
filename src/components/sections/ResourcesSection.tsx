@@ -5,6 +5,7 @@ import { urlFor } from '@/lib/sanity.image'
 import { PortableText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import VideoPlayer from '@/components/VideoPlayer'
+import Reveal from '@/components/Reveal'
 
 const resourcesStyle = {
   heading: 'w-full md:max-w-6xl',
@@ -49,7 +50,12 @@ const ptComponents = {
     link: ({ value, children }: any) => {
       const href = value?.href || '#'
       return (
-        <a href={href} target='_blank' rel='noreferrer noopener'>
+        <a
+          href={href}
+          target='_blank'
+          rel='noreferrer noopener'
+          className='underline-offset-4 hover:underline'
+        >
           {children}
         </a>
       )
@@ -79,17 +85,17 @@ export default function ResourcesSection({ resources }: { resources: ResourcesDa
   return (
     <section id='resources' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-neutral-200'>
       
-      <div className={resourcesStyle.heading}>
-          <h3>{heading}</h3>
-      </div>
+      <Reveal className={resourcesStyle.heading} delay={0}>
+        <h3>{heading}</h3>
+      </Reveal>
 
       <div className={resourcesStyle.cols}>
-        <div className={resourcesStyle.col1}>
+        <Reveal className={resourcesStyle.col1} delay={150}>
           {renderImage(image)}
-        </div>
-        <div className={resourcesStyle.col2}>
+        </Reveal>
+        <Reveal className={resourcesStyle.col2} delay={300}>
           <PortableText value={content} components={ptComponents} />
-        </div>
+        </Reveal>
       </div>
       
     </section>

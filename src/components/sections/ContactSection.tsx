@@ -5,6 +5,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import VideoPlayer from '@/components/VideoPlayer'
 
 import ContactForm from '@/components/sections/ContactForm'
+import Reveal from '@/components/Reveal'
 
 const contactStyle = {
   heading: 'w-full md:max-w-6xl',
@@ -48,7 +49,12 @@ const ptComponents = {
     link: ({ value, children }: any) => {
       const href = value?.href || '#'
       return (
-        <a href={href} target='_blank' rel='noreferrer noopener'>
+        <a
+          href={href}
+          target='_blank'
+          rel='noreferrer noopener'
+          className='underline-offset-4 hover:underline'
+        >
           {children}
         </a>
       )
@@ -64,22 +70,17 @@ export default function contactSection({ contact }: { contact: contactData | nul
   return (
     <section id='contact' className='lg:h-screen flex flex-col items-center justify-center p-8 scroll-mt-16 bg-white'>
 
-      <div className={contactStyle.heading}>
-          <h3>{heading}</h3>
-      </div>
+      <Reveal className={contactStyle.heading} delay={0}>
+        <h3>{heading}</h3>
+      </Reveal>
 
       <div className={contactStyle.cols}>
-        <div className={contactStyle.col1}>
+        <Reveal className={contactStyle.col1} delay={150}>
           <ContactForm />
-          
-        </div>
-        <div className={contactStyle.col2}>
-         {content ? (
-              <div>
-                <PortableText value={content} components={ptComponents} />
-              </div>
-            ) : null}
-        </div>
+        </Reveal>
+        <Reveal className={contactStyle.col2} delay={300}>
+          <PortableText value={content} components={ptComponents} />
+        </Reveal>
       </div>
 
       

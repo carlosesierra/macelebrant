@@ -5,6 +5,7 @@ import { urlFor } from '@/lib/sanity.image'
 import { PortableText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import VideoPlayer from '@/components/VideoPlayer'
+import Reveal from '@/components/Reveal'
 
 const aboutStyle = {
   heading: 'w-full md:max-w-6xl',
@@ -48,7 +49,12 @@ const ptComponents = {
     link: ({ value, children }: any) => {
       const href = value?.href || '#'
       return (
-        <a href={href} target='_blank' rel='noreferrer noopener'>
+        <a
+          href={href}
+          target='_blank'
+          rel='noreferrer noopener'
+          className='underline-offset-4 hover:underline'
+        >
           {children}
         </a>
       )
@@ -79,18 +85,18 @@ export default function AboutSection({ about }: { about: AboutData | null }) {
   return (
     <section id='aboutme' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-white'>
       
-      <div className={aboutStyle.heading}>
-          <h3>{heading}</h3>
-      </div>
+      <Reveal className={aboutStyle.heading} delay={0}>
+        <h3>{heading}</h3>
+      </Reveal>
 
       <div className={aboutStyle.cols}>
-        <div>
+        <Reveal delay={150}>
           {renderImage(image01)}
           {renderImage(image02)}
-        </div>
-        <div>
+        </Reveal>
+        <Reveal delay={300}>
           <PortableText value={content} components={ptComponents} />
-        </div>
+        </Reveal>
       </div>
       
     </section>

@@ -2,17 +2,18 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import AnimatedLogo from '@/components/AnimatedLogo';
+
 
 const navigation = {
   content:{
     logo:{
-      copy:`Marriage Celebrant Melbourne`,
-      img:`/logo-horizontal.svg`,
-      href:`https://www.macelebrant.com/`,
+      alt:`Marriage Celebrant Melbourne`,
+      href:`/`,
     }
   },
   style:{
-    logo:`h-15 w-auto`,
+    logo:`h-10 w-full lg:h-10 lg:w-auto`,
     logolink:`-m-1.5 p-1.5`,
     links:`hover:text-yellow transition`,
     linksmob:`-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5`,
@@ -28,6 +29,7 @@ const items = [
   { name: 'Resources', href: '#resources' },
   { name: 'Contact', href: '#contact' },
 ]
+
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -65,29 +67,28 @@ export default function Navbar() {
       }`}
     >
       <div className='mx-auto flex h-20 items-center justify-between px-4'>
-
-        <Link 
-            data-aos='fade-right'
-            href={navigation.content.logo.href}
-            className={navigation.style.logolink}>
-                <span className='sr-only'>{navigation.content.logo.copy}</span>
-                <img
-                    alt={navigation.content.logo.copy}
-                    src={navigation.content.logo.img}
-                    className={navigation.style.logo}
-                />
+        <Link
+          href={navigation.content.logo.href}
+          aria-label={navigation.content.logo.alt}
+          className={navigation.style.logolink}
+        >
+          <AnimatedLogo className={navigation.style.logo} />
         </Link>
         
-        <div className='hidden lg:flex gap-8 items-center text-sm uppercase tracking-widest text-gray-600'>
+        <div
+          className={`hidden lg:flex gap-8 items-center text-sm uppercase tracking-widest transition-colors duration-300 ${
+            isScrolled ? 'text-[#c6999b]' : 'text-gray-600'
+          }`}
+        >
           {items.map((item) => (
-            <Link 
-              key={item.name} 
-              href={item.href} 
-              className={navigation.style.links}>
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`${navigation.style.links} transition-colors duration-300`}
+            >
               {item.name}
             </Link>
           ))}
-
         </div>
 
         <button
@@ -101,7 +102,7 @@ export default function Navbar() {
             <path
               d='M4 6h16M4 12h16M4 18h16'
               fill='none'
-              stroke='currentColor'
+              stroke='#c6999b'
               strokeWidth='2'
               strokeLinecap='round'
             />
@@ -128,8 +129,14 @@ export default function Navbar() {
             mobileOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          <div className='flex items-center justify-between px-6 py-5 border-b'>
-            <span className='text-sm uppercase tracking-widest text-gray-500'>Menu</span>
+          <div className='flex items-center justify-between gap-4 px-6 py-5 border-b'>
+            <Link
+              href={navigation.content.logo.href}
+              aria-label={navigation.content.logo.alt}
+              className='flex-1'
+            >
+              <AnimatedLogo className={navigation.style.logo} />
+            </Link>
             <button
               type='button'
               aria-label='Close menu'
@@ -140,7 +147,7 @@ export default function Navbar() {
                 <path
                   d='M6 6l12 12M18 6l-12 12'
                   fill='none'
-                  stroke='currentColor'
+                  stroke='#c6999b'
                   strokeWidth='2'
                   strokeLinecap='round'
                 />

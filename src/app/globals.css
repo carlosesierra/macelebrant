@@ -16,36 +16,42 @@ html {
 
 
 /* Update the body and headings to use these variables */
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-quicksand), ui-sans-serif, system-ui;
-  -webkit-font-smoothing: antialiased;
-}
+@layer base {
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-quicksand), ui-sans-serif, system-ui;
+    -webkit-font-smoothing: antialiased;
+  }
 
-h1, h2, h3,.font-serif {
-  color: var(--heading-color);
-  font-family: var(--font-geist-sans), serif;
-  font-weight: 100;
-  margin: 0;
-  padding: 0;
-}
-h1, p, li  {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-h2 {
-  font-size: 2.5rem;
-}
-h3 {
-  font-size: 1.75rem;
-}
-p {
-  margin-bottom: 1.5rem;
-}
-p{
-  white-space: normal;
-  word-break: break-word;
+  :where(h1, h2, h3, .font-serif) {
+    color: var(--heading-color);
+    font-family: var(--font-geist-sans), serif;
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1,
+  p,
+  li {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+    white-space: normal;
+    word-break: break-word;
+  }
 }
 
 .home-sequence {
@@ -65,20 +71,38 @@ p{
   height: 100%;
 }
 
-@media (width >= 48rem) {
-  h1, p, li  {
-  font-size: 1.25rem;
-  line-height: 2rem;
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 500ms ease, transform 500ms ease;
+  will-change: opacity, transform;
 }
-  h2 {
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (width >= 48rem) {
+  :where(h1, p, li) {
+    font-size: 1.25rem;
+    line-height: 2rem;
+  }
+  :where(h2) {
     font-size: 3rem;
   }
-  h3 {
+  :where(h3) {
     font-size: 2.25rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+
   .home-sequence-item {
     animation: none !important;
     opacity: 0 !important;

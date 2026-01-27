@@ -1,5 +1,6 @@
 // src/sanity/schemaTypes/TestimonialsSection.tsx
 import TestimonialCarousel from '@/components/sections/TestimonialCarousel'
+import Reveal from '@/components/Reveal'
 
 const testimonialStyle = {
   heading: 'w-full md:max-w-6xl',
@@ -18,13 +19,13 @@ export default function TestimonialsSection({ testimonials, }: { testimonials: T
 
   return (
     <section id='testimonials' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-white'>
-      <div className={testimonialStyle.heading}>
-          <h3>{heading}</h3>
-      </div>
+      <Reveal className={testimonialStyle.heading} delay={0}>
+        <h3>{heading}</h3>
+      </Reveal>
 
-      <div className='w-full max-w-6xl mx-auto'>
+      <Reveal className='w-full max-w-6xl mx-auto' delay={150}>
         <TestimonialCarousel testimonials={testimonials} />
-      </div>
+      </Reveal>
     </section>
   )
 }

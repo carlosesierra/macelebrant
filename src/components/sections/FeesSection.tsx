@@ -3,6 +3,7 @@ import { urlFor } from '@/lib/sanity.image'
 import { PortableText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import VideoPlayer from '@/components/VideoPlayer'
+import Reveal from '@/components/Reveal'
 
 const feesStyle = {
   heading: 'w-full md:max-w-6xl',
@@ -44,7 +45,12 @@ const ptComponents = {
     link: ({ value, children }: any) => {
       const href = value?.href || '#'
       return (
-        <a href={href} target='_blank' rel='noreferrer noopener'>
+        <a
+          href={href}
+          target='_blank'
+          rel='noreferrer noopener'
+          className='underline-offset-4 hover:underline'
+        >
           {children}
         </a>
       )
@@ -60,26 +66,26 @@ export default function FeesSection({ fees, }: { fees: FeesData | null }) {
 
   return (
     <section id='fees' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-neutral-200'>
-      <div className={feesStyle.heading}>
-          <h3>{heading}</h3>
-      </div>
+      <Reveal className={feesStyle.heading} delay={0}>
+        <h3>{heading}</h3>
+      </Reveal>
 
       <div className={feesStyle.cols}>
-        <div>
+        <Reveal delay={150}>
           {leftContent && leftContent.length > 0 ? (
             <div>
               <PortableText value={leftContent} components={ptComponents} />
             </div>
           ) : null}
-        </div>
+        </Reveal>
 
-        <div>
+        <Reveal delay={300}>
           {rightContent && rightContent.length > 0 ? (
             <div>
               <PortableText value={rightContent} components={ptComponents}/>
             </div>
           ) : null}
-        </div>
+        </Reveal>
       </div>
     </section>
   )

@@ -1,5 +1,6 @@
 import { PortableText } from '@portabletext/react'
 import VideoPlayer from '@/components/VideoPlayer'
+import Reveal from '@/components/Reveal'
 
 const promoVideoStyle = {
   heading: 'w-full md:max-w-6xl',
@@ -22,22 +23,22 @@ export default function PromoVideoSection({ promoVideo }: { promoVideo: PromoVid
 
   return (
     <section id='promovideo' className='flex flex-col items-center justify-center p-8 scroll-mt-16 bg-neutral-200'>
-      <div className={promoVideoStyle.heading}>
-          <h3>{heading}</h3>
-      </div>
+      <Reveal className={promoVideoStyle.heading} delay={0}>
+        <h3>{heading}</h3>
+      </Reveal>
 
       <div className={promoVideoStyle.cols}>
-        <div className={promoVideoStyle.col1}>
+        <Reveal className={promoVideoStyle.col1} delay={150}>
           {content && (
             <div>
               {content && <PortableText value={content}/>}
             </div>
           )}
-        </div>
+        </Reveal>
 
-        <div className={promoVideoStyle.col2}>
+        <Reveal className={promoVideoStyle.col2} delay={300}>
           {video && <VideoPlayer url={video} />}
-        </div>
+        </Reveal>
       </div>
     </section>
   )
