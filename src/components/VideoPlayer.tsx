@@ -1,46 +1,90 @@
 'use client'
 
-import dynamic from 'next/dynamic'
-import type { ComponentType, CSSProperties } from 'react'
+import { useMemo } from 'react'
 
-// Minimal prop typing for react-player (avoids version-specific exported types)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ReactPlayerProps = {
-  url?: any
-  width?: string | number
-  height?: string | number
-  controls?: boolean
-  // react-player forwards unknown props to the underlying player; this is useful for iOS
-  playsinline?: boolean
-  style?: CSSProperties
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  config?: any
+type VideoPlayerProps = {
+  url?: string
+  src?: string
+  className?: string
 }
 
-const ReactPlayer = dynamic(() => import('react-player'), {
-  ssr: false,
-}) as unknown as ComponentType<ReactPlayerProps>
+function getYouTubeId(input: string): string | null {
+  if (!input) return null
 
-export default function VideoPlayer({ url }: { url: string }) {
-  const origin = typeof window !== 'undefined' ? window.location.origin : undefined
+  // Handle youtu.be/<id>
+  const short = input.match(/^https?:\/\/youtu\.be\/([^?&#/]+)/i)
+  if (short?.[1]) return short[1]
 
-  // react-player typings sometimes model youtube config as the raw playerVars object.
-  // We cast here so we can pass the documented shape (youtube.playerVars.origin).
-  const youtubeConfig = (origin ? { playerVars: { origin } } : {}) as any
+  try {
+    const u = new URL(input)
+
+    // youtube.com/watch?v=<id>
+    const v = u.searchParams.get('v')
+    if (v) return v
+
+    // youtube.com/embed/<id>
+    const parts = u.pathname.split('/').filter(Boolean)
+    const embedIdx = parts.indexOf('embed')
+    if (embedIdx >= 0 && parts[embedIdx + 1]) return parts[embedIdx + 1]
+
+    // youtube.com/shorts/<id>
+    const shortsIdx = parts.indexOf('shorts')
+    if (shortsIdx >= 0 && parts[shortsIdx + 1]) return parts[shortsIdx + 1]
+
+    return null
+  } catch {
+    return null
+  }
+}
+
+export default function VideoPlayer({ url, src, className }: VideoPlayerProps) {
+  const inputUrl = url || src || ''
+
+  const { embedUrl, isYouTube } = useMemo(() => {
+    const id = getYouTubeId(inputUrl)
+    if (!id) return { embedUrl: '', isYouTube: false }
+
+    // Privacy-enhanced domain; playsinline=1 improves iPhone behavior.
+    const e = `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`
+    return { embedUrl: e, isYouTube: true }
+  }, [inputUrl])
+
+  if (!inputUrl) {
+    if (process.env.NODE_ENV !== 'production') {
+      return (
+        <div className='my-0 rounded-lg border border-red-300 bg-red-50 p-4 text-sm text-red-700'>
+          VideoPlayer: missing url/src
+        </div>
+      )
+    }
+    return null
+  }
 
   return (
-    <div className='relative aspect-video my-0 overflow-hidden rounded-lg bg-black shadow-xl border-16 border-white'>
-      <ReactPlayer
-        url={url}                 // ✅ was src
-        width='100%'
-        height='100%'
-        controls
-        playsinline               // ✅ helps iPhone Safari
-        style={{ position: 'absolute', top: 0, left: 0 }}
-        config={{
-          youtube: youtubeConfig,
-        }}
-      />
+    <div
+      className={
+        className ||
+        'relative aspect-video my-0 overflow-hidden rounded-lg bg-black shadow-xl border-16 border-white'
+      }
+    >
+      {isYouTube ? (
+        <iframe
+          src={embedUrl}
+          title='YouTube video player'
+          className='absolute inset-0 h-full w-full'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+          allowFullScreen
+          referrerPolicy='strict-origin-when-cross-origin'
+        />
+      ) : (
+        // Fallback for direct video URLs (mp4, etc.)
+        <video
+          className='absolute inset-0 h-full w-full'
+          src={inputUrl}
+          controls
+          playsInline
+        />
+      )}
     </div>
   )
 }

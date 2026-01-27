@@ -5,7 +5,7 @@ const imageSequenceStyle = {
   // Parent must be positioned for <Image fill /> to render reliably on iOS Safari
   imageSequence: 'home-sequence relative aspect-square w-full overflow-hidden',
   // Make each frame overlap the same box; give it a positioned box for <Image fill />
-  imgs: 'home-sequence-item absolute inset-0 relative shadow-md border-16 border-white',
+  imgs: 'home-sequence-item absolute inset-0 shadow-md border-16 border-white',
   img: 'home-sequence-media object-cover'
 }
 
