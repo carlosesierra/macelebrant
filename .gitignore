@@ -21,6 +21,8 @@
 # production
 /build
 /_assets
+testimonials_for_sanity.json
+*.csv
 
 # misc
 .DS_Store
@@ -41,3 +43,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
