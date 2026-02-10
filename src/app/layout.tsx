@@ -1,12 +1,17 @@
 import type { Metadata } from 'next'
-import { Quicksand } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 
-const quicksand = Quicksand({
+const quicksand = localFont({
+  src: [
+    { path: './fonts/Quicksand-Light.woff2', weight: '300', style: 'normal' },
+    { path: './fonts/Quicksand-Regular.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/Quicksand-Medium.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/Quicksand-SemiBold.woff2', weight: '600', style: 'normal' },
+    { path: './fonts/Quicksand-Bold.woff2', weight: '700', style: 'normal' },
+  ],
   variable: '--font-quicksand',
-  subsets: ['latin'],
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {

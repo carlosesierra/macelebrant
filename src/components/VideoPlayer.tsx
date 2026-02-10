@@ -1,7 +1,3 @@
-'use client'
-
-import { useMemo } from 'react'
-
 type VideoPlayerProps = {
   url?: string
   src?: string
@@ -40,14 +36,12 @@ function getYouTubeId(input: string): string | null {
 export default function VideoPlayer({ url, src, className }: VideoPlayerProps) {
   const inputUrl = url || src || ''
 
-  const { embedUrl, isYouTube } = useMemo(() => {
-    const id = getYouTubeId(inputUrl)
-    if (!id) return { embedUrl: '', isYouTube: false }
-
-    // Privacy-enhanced domain; playsinline=1 improves iPhone behavior.
-    const e = `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`
-    return { embedUrl: e, isYouTube: true }
-  }, [inputUrl])
+  const id = getYouTubeId(inputUrl)
+  const isYouTube = Boolean(id)
+  // Privacy-enhanced domain; playsinline=1 improves iPhone behavior.
+  const embedUrl = id
+    ? `https://www.youtube-nocookie.com/embed/${id}?rel=0&modestbranding=1&playsinline=1`
+    : ''
 
   if (!inputUrl) {
     if (process.env.NODE_ENV !== 'production') {

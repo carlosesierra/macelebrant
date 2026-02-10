@@ -90,7 +90,7 @@ export default function ContactForm() {
           required
           value={form.name}
           onChange={onChange}
-          className='w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-black focus:outline-none'
+          className='w-full border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-black focus:outline-none'
         />
       </div>
 
@@ -105,7 +105,7 @@ export default function ContactForm() {
           required
           value={form.email}
           onChange={onChange}
-          className='w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-black focus:outline-none'
+          className='w-full border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-black focus:outline-none'
         />
       </div>
 
@@ -120,7 +120,7 @@ export default function ContactForm() {
           required
           value={form.message}
           onChange={onChange}
-          className='w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-black focus:outline-none'
+          className='w-full border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-black focus:outline-none'
         />
       </div>
 

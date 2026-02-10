@@ -16,9 +16,25 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/app/(site)/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project uses `next/font/local` to load Quicksand from `src/app/fonts/` (no network fetch during build).
+
+## Builds
+
+The build uses Webpack to avoid Turbopack restrictions in sandboxed environments:
+
+```bash
+npm run build
+```
+
+For offline/sandbox builds (no outbound network to Sanity), use:
+
+```bash
+npm run build:offline
+```
+
+This sets `SANITY_OFFLINE=1` and uses a safe fallback payload for Sanity data during prerendering.
 
 ## Learn More
 

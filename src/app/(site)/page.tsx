@@ -1,5 +1,5 @@
 // src/app/page.tsx
-import { client } from '@/lib/sanity.client' // Ensure this is imported!
+import { sanityFetch } from '@/lib/sanity.client'
 
 
 import HomeSection from '@/components/sections/HomeSection'
@@ -13,16 +13,66 @@ import ContactSection from '@/components/sections/ContactSection'
 
 export default async function HomePage() {
   // Fetch homepage content
-  const data = await client.fetch(`{
-    'home': *[_type == 'home'][0],
-    'about': *[_type == 'about'][0],
-    'promoVideo': *[_type == 'promoVideo'][0],
-    'testimonials': *[_type == 'testimonial'] | order(orderRank),
-    'fees': *[_type == 'fees'][0],
-    'espanol': *[_type == 'espanol'][0],
-    'resources': *[_type == 'resources'][0],
-    'contact': *[_type == 'contact'][0]
-  }`)
+  const offlineData = {
+    home: null,
+    about: null,
+    promoVideo: null,
+    testimonials: [],
+    fees: null,
+    espanol: null,
+    resources: null,
+    contact: null,
+  }
+
+  const data = await sanityFetch({
+    query: `{
+      'home': *[_type == 'home'][0]{
+        heading,
+        subHeading,
+        content,
+        image,
+        images
+      },
+      'about': *[_type == 'about'][0]{
+        heading,
+        content,
+        image01,
+        image02
+      },
+      'promoVideo': *[_type == 'promoVideo'][0]{
+        heading,
+        content,
+        video
+      },
+      'testimonials': *[_type == 'testimonial'] | order(orderRank){
+        _id,
+        heading,
+        content,
+        image
+      },
+      'fees': *[_type == 'fees'][0]{
+        heading,
+        leftContent,
+        rightContent
+      },
+      'espanol': *[_type == 'espanol'][0]{
+        heading,
+        content,
+        image
+      },
+      'resources': *[_type == 'resources'][0]{
+        heading,
+        content,
+        image
+      },
+      'contact': *[_type == 'contact'][0]{
+        heading,
+        content
+      }
+    }`,
+    revalidate: 60,
+    fallback: offlineData,
+  })
 
   return (
     <div className='scroll-smooth'>
