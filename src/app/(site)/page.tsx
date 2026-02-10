@@ -1,5 +1,5 @@
 // src/app/page.tsx
-import { sanityFetch } from '@/lib/sanity.client'
+import { sanityFetch } from '@/lib/sanity.server'
 
 
 import HomeSection from '@/components/sections/HomeSection'
